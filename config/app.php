@@ -12,6 +12,10 @@ return [
     | other UI elements where an application name needs to be displayed.
     |
     */
+    'providers'=>
+    [
+     App\Modules\Categories\Providers\CategoryServiceProvider::class
+],
 
     'name' => env('APP_NAME', 'Laravel'),
 
@@ -53,6 +57,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    
 
     /*
     |--------------------------------------------------------------------------

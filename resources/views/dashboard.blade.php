@@ -13,11 +13,11 @@
                     show category
               </a>
               </div>
-              <div>
+              {{-- <div>
               <a href="{{ route('createcategory') }}" class="btn btn-primary">
                     Create Category
               </a>
-              </div>
+              </div> --}}
 
             </div>
         </div>
