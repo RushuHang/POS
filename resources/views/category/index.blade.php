@@ -26,15 +26,37 @@
                             @foreach($categories as $category)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $category->name }}
+                                        
+                                            {{ $category->name }}
+                                       
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                                         {{ $category->description }}
                                     </td>
+                                    <td>
+                                        <a href="{{ route('category.show', $category->id) }}" class="text-blue-500 hover:underline">show details</a>
+                                    </td>
+                                     <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ route('category.edit', $category->id) }}" class="text-blue-500 hover:underline mr-2">update</a>
+
+                                    <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:underline"
+                                            onclick="return confirm('Are you sure you want to delete this category?')">
+                                            delete
+                                        </button>
+                                    </form>
+                                </td>
+
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <div>
+                        <a href="{{ route('category.create') }}" class="text-blue-500 hover:underline">create category</a>
+                        
+                    </div>
 
                 </div>
             </div>

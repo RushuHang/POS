@@ -23,7 +23,11 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $this->model::findOrFail($id);
     }
 
-    public function create(array $data)
+    public function create(){
+        
+    }
+
+    public function show(array $data)
     {
         return $this->model::create($data);
     }

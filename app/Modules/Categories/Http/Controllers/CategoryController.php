@@ -5,6 +5,7 @@ namespace App\Modules\Categories\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Categories\Services\CategoryService;
 use Illuminate\Http\Request;
+use App\Modules\Categories\Http\Requests\StoreCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -18,30 +19,54 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = $this->categoryService->getAllCategories();
-        return response()->json($categories);
+        return view('category.index', compact('categories'));
+    }
+
+    public function create(){
+        return view('category.create');
     }
 
     public function show($id)
     {
         $category = $this->categoryService->getCategoryById($id);
-        return response()->json($category);
+        return view('category.show', compact('category'));
     }
 
-    public function store(Request $request)
-    {
-        $category = $this->categoryService->createCategory($request->all());
-        return response()->json($category, 201);
-    }
+    public function store(StoreCategoryRequest $request)
+        {
+            $category = $this->categoryService->createCategory($request->validated());
 
-    public function update(Request $request, $id)
-    {
-        $category = $this->categoryService->updateCategory($id, $request->all());
-        return response()->json($category);
-    }
+            return redirect()
+                ->route('category.index')
+                ->with('success', 'Category created successfully');
+        }
+
+   public function edit($id)
+{
+    $category = $this->categoryService->getCategoryById($id);
+    return view('category.update', compact('category'));
+}
+
+public function update(Request $request, $id)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255|unique:categories,name,' . $id,
+        'description' => 'required|string|max:500',
+    ]);
+
+    $this->categoryService->updateCategory($id, $validated);
+
+    return redirect()
+        ->route('category.index')
+        ->with('success', 'Category updated successfully');
+}
+
 
     public function destroy($id)
     {
         $this->categoryService->deleteCategory($id);
-        return response()->json(null, 204);
+        return redirect()
+                ->route('category.index')
+                ->with('success', 'Category deleted successfully');
     }
 }

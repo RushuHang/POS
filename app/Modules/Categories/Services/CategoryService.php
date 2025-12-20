@@ -24,7 +24,7 @@ class CategoryService
 
     public function createCategory(array $data)
     {
-        return $this->categoryRepository->create($data);
+        return $this->categoryRepository->show($data);
     }
 
     public function updateCategory($id, array $data)
