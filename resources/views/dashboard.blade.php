@@ -7,17 +7,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div>
-                <a href="{{ route('category.index') }}" class="btn btn-primary">
-                    show category
-              </a>
-              </div>
-              {{-- <div>
-              <a href="{{ route('createcategory') }}" class="btn btn-primary">
-                    Create Category
-              </a>
-              </div> --}}
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                
+                <div class="flex space-x-4">
+                   <x-button href="{{ route('category.index') }}">
+                        Show Categories
+                    </x-button>
+                </div>
 
             </div>
         </div>

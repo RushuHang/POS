@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ $category->name ?? 'Category Details' }}
         </h2>
     </x-slot>
 
@@ -33,19 +33,19 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                                         {{ $category->description }}
                                     </td>
-                                    <td>
-                                        <a href="{{ route('category.show', $category->id) }}" class="text-blue-500 hover:underline">show details</a>
-                                    </td>
-                                     <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="{{ route('category.edit', $category->id) }}" class="text-blue-500 hover:underline mr-2">update</a>
+                                    <td class="px-6 py-4 flex gap-4">
+                                        <x-button href="{{ route('category.show', $category->id) }}">
+                                            show details
+                                        </x-button>
 
-                                    <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:underline"
-                                            onclick="return confirm('Are you sure you want to delete this category?')">
-                                            delete
-                                        </button>
+                                        <x-button href="{{ route('category.edit', $category->id) }}">
+                                            update
+                                        </x-button>
+                                        <div>
+                                        @include('category.delete', ['category' => $category])
+                                        </div>
+                                    </td>
+
                                     </form>
                                 </td>
 
@@ -53,9 +53,10 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div>
-                        <a href="{{ route('category.create') }}" class="text-blue-500 hover:underline">create category</a>
-                        
+                    <div class="mt-4">
+                        <x-button href="{{ route('category.create') }}">
+                                            create category
+                                        </x-button>                        
                     </div>
 
                 </div>
