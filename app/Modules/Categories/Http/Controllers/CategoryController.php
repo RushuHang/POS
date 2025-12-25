@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\Categories\Services\CategoryService;
 use Illuminate\Http\Request;
 use App\Modules\Categories\Http\Requests\StoreCategoryRequest;
+use App\Modules\Categories\Http\Requests\UpdateCategoryRequest;
+
 
 class CategoryController extends Controller
 {
@@ -47,19 +49,15 @@ class CategoryController extends Controller
     return view('category.update', compact('category'));
 }
 
-public function update(Request $request, $id)
+public function update(UpdateCategoryRequest $request, $id)
 {
-    $validated = $request->validate([
-        'name' => 'required|string|max:255|unique:categories,name,' . $id,
-        'description' => 'required|string|max:500',
-    ]);
-
-    $this->categoryService->updateCategory($id, $validated);
+    $this->categoryService->updateCategory($id, $request->validated());
 
     return redirect()
         ->route('category.index')
         ->with('success', 'Category updated successfully');
 }
+
 
 
     public function destroy($id)
